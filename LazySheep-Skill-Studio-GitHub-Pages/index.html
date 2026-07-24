@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="为懒羊羊 IP 定制的画图 Skill 编辑、校验与打包工作台。"
+    />
+    <title>懒羊羊 Skill Studio</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="studio-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark">懒</div>
+          <div>
+            <div class="brand-line">
+              <strong>懒羊羊 Skill Studio</strong>
+              <span class="version-chip">v1.0</span>
+            </div>
+            <p>github-pages / lazy-sheep-illustration.skill</p>
+          </div>
+        </div>
+        <div class="top-actions" aria-label="Skill 操作">
+          <button class="button ghost" id="reloadButton" type="button">↻ 重新载入</button>
+          <button class="button ghost" id="validateButton" type="button">✓ 校验</button>
+          <button class="button dark" id="saveButton" type="button">保存</button>
+          <button class="button yellow" id="packageButton" type="button">打包 ZIP</button>
+        </div>
+      </header>
+
+      <div class="studio-grid">
+        <aside class="sidebar">
+          <section class="side-card reference-card">
+            <div class="card-heading">
+              <div>
+                <span class="eyebrow">REFERENCE</span>
+                <h2>IP 三视图</h2>
+              </div>
+              <button class="mini-button" id="replaceButton" type="button">替换</button>
+              <input
+                class="visually-hidden"
+                id="imageInput"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+              />
+            </div>
+            <div class="reference-stage">
+              <img class="js-ip-image" alt="懒羊羊正面、侧面和背面三视图" />
+            </div>
+            <div class="reference-meta">
+              <div><span>角色</span><strong>懒羊羊</strong></div>
+              <div><span>视图</span><strong>正 · 侧 · 背</strong></div>
+            </div>
+          </section>
+
+          <section class="side-card status-card" id="statusCard">
+            <div class="status-head">
+              <span class="status-dot"></span>
+              <div>
+                <span class="eyebrow">STATUS</span>
+                <h2 id="statusTitle">Skill is valid</h2>
+              </div>
+            </div>
+            <p id="statusDetail">默认配置已就绪</p>
+            <div class="status-meter"><span></span></div>
+          </section>
+
+          <section class="side-card palette-card">
+            <div class="card-heading">
+              <div>
+                <span class="eyebrow">PALETTE</span>
+                <h2>固定色板</h2>
+              </div>
+            </div>
+            <div class="palette-list">
+              <div class="palette-item"><i style="background:#fff"></i><span><strong>羊毛白</strong><small>#FFFFFF</small></span></div>
+              <div class="palette-item"><i style="background:#ffe9d6"></i><span><strong>奶油杏</strong><small>#FFE9D6</small></span></div>
+              <div class="palette-item"><i style="background:#ffd84d"></i><span><strong>口水巾黄</strong><small>#FFD84D</small></span></div>
+              <div class="palette-item"><i style="background:#c88b3a"></i><span><strong>羊角棕</strong><small>#C88B3A</small></span></div>
+              <div class="palette-item"><i style="background:#111"></i><span><strong>描边黑</strong><small>#111111</small></span></div>
+            </div>
+          </section>
+        </aside>
+
+        <section class="workspace">
+          <nav class="tabbar" aria-label="Skill 编辑模块" role="tablist">
+            <button class="active" data-tab="entry" role="tab" aria-selected="true"><span>入口</span><small>使用说明</small></button>
+            <button data-tab="tuning" role="tab" aria-selected="false"><span>调参</span><small>核心规则</small></button>
+            <button data-tab="ip" role="tab" aria-selected="false"><span>IP</span><small>角色约束</small></button>
+            <button data-tab="style" role="tab" aria-selected="false"><span>画风背景</span><small>视觉规范</small></button>
+            <button data-tab="prompt" role="tab" aria-selected="false"><span>提示词</span><small>生图模板</small></button>
+            <button data-tab="qa" role="tab" aria-selected="false"><span>QA</span><small>质量检查</small></button>
+            <button data-tab="listing" role="tab" aria-selected="false"><span>列表文案</span><small>展示信息</small></button>
+          </nav>
+
+          <div class="workspace-body">
+            <div class="section-intro">
+              <div>
+                <span class="eyebrow" id="sectionHint">使用说明</span>
+                <h1 id="sectionTitle">入口</h1>
+              </div>
+              <p>所有内容均可编辑，修改后可校验、保存或直接打包成 Skill。</p>
+            </div>
+
+            <section class="tab-panel active" data-panel="entry">
+              <div class="panel-stack">
+                <section class="hero-panel">
+                  <div>
+                    <span class="hero-kicker">LAZY SHEEP · ILLUSTRATION</span>
+                    <h2>一套专属于懒羊羊的画图工作台</h2>
+                    <p>固定角色、画风、提示词与检查规则，让每一张动画配图都像出自同一个角色设定。</p>
+                    <div class="hero-actions">
+                      <button class="button yellow jump-button" data-jump="prompt" type="button">编辑提示词</button>
+                      <button class="text-button jump-button" data-jump="ip" type="button">查看 IP 规范 →</button>
+                    </div>
+                  </div>
+                  <div class="hero-badge"><span>角色一致性</span><strong>95%</strong><small>7 个规则模块已加载</small></div>
+                </section>
+                <section class="metrics-row">
+                  <article><span>参考资产</span><strong>1 张三视图</strong><small>正面 / 侧面 / 背面</small></article>
+                  <article><span>画面比例</span><strong>16:9</strong><small>动画剪辑默认横版</small></article>
+                  <article><span>规则模块</span><strong>7 个</strong><small>可独立编辑与校验</small></article>
+                </section>
+                <section class="content-card">
+                  <div class="content-card-title">
+                    <div><span class="eyebrow">WORKFLOW</span><h3>生成工作流</h3></div>
+                    <span class="soft-chip">自动写入 SKILL.md</span>
+                  </div>
+                  <div class="workflow-grid">
+                    <article><span>01</span><h4>读取三视图</h4><p>锁定懒羊羊的比例、配色与轮廓</p></article>
+                    <article><span>02</span><h4>解析画面</h4><p>把文案转换成动作、情绪与场景</p></article>
+                    <article><span>03</span><h4>组装提示词</h4><p>合并 IP、画风、构图和禁用项</p></article>
+                    <article><span>04</span><h4>执行 QA</h4><p>逐项检查角色一致性与画面完整性</p></article>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-panel="tuning">
+              <div class="editor-grid">
+                <article class="editor-card">
+                  <header><span class="eyebrow">METADATA</span><h3>Skill 名称</h3><p>用于识别和安装的基础信息。</p></header>
+                  <div class="editor-fields">
+                    <label><span>英文标识</span><input data-key="skillName" /></label>
+                    <label><span>展示名称</span><input data-key="displayName" /></label>
+                    <label><span>功能描述</span><textarea rows="5" data-key="description"></textarea></label>
+                  </div>
+                </article>
+                <article class="editor-card">
+                  <header><span class="eyebrow">RULES</span><h3>必须遵循</h3><p>每次生成都要加载的硬性要求。</p></header>
+                  <div class="editor-fields"><label><span>核心规则</span><textarea class="tall" data-key="mustHave"></textarea></label></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-panel="ip">
+              <div class="editor-grid">
+                <article class="editor-card">
+                  <header><span class="eyebrow">IDENTITY</span><h3>IP 形象约束</h3><p>决定懒羊羊不可改变的核心特征。</p></header>
+                  <div class="editor-fields">
+                    <label><span>固定形象</span><textarea class="tall" data-key="ipConstraints"></textarea></label>
+                    <label><span>外形与比例</span><textarea rows="6" data-key="appearance"></textarea></label>
+                  </div>
+                </article>
+                <article class="editor-card">
+                  <header><span class="eyebrow">REFERENCE</span><h3>三视图使用规则</h3><p>告诉生成工具何时读取对应视角。</p></header>
+                  <div class="editor-fields">
+                    <div class="mini-reference"><img class="js-ip-image" alt="懒羊羊三视图缩略图" /></div>
+                    <label><span>参考规则</span><textarea rows="8" data-key="fourViewRules"></textarea></label>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-panel="style">
+              <div class="editor-grid">
+                <article class="editor-card">
+                  <header><span class="eyebrow">STYLE DNA</span><h3>画风与背景</h3><p>定义线条、色彩、质感和场景复杂度。</p></header>
+                  <div class="editor-fields"><label><span>视觉规范</span><textarea class="tall" data-key="styleBackground"></textarea></label></div>
+                </article>
+                <article class="editor-card">
+                  <header><span class="eyebrow">MOTION</span><h3>动作与表情</h3><p>保持角色结构，同时允许情绪化表演。</p></header>
+                  <div class="editor-fields">
+                    <label><span>动作规则</span><textarea rows="8" data-key="actionRules"></textarea></label>
+                    <label><span>禁止出现</span><textarea rows="8" data-key="negativeRules"></textarea></label>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-panel="prompt">
+              <div class="prompt-layout">
+                <article class="editor-card">
+                  <header><span class="eyebrow">TEMPLATE</span><h3>生图提示词模板</h3><p>花括号中的变量会根据每个分镜自动替换。</p></header>
+                  <div class="editor-fields">
+                    <div class="variable-row"><span>{{画面描述}}</span><span>{{比例}}</span><span>{{视角}}</span><span>{{背景}}</span><span>{{动作}}</span><span>{{情绪}}</span></div>
+                    <label><span>模板正文</span><textarea class="prompt-editor" data-key="promptTemplate"></textarea></label>
+                  </div>
+                </article>
+                <article class="compiled-card">
+                  <div class="content-card-title">
+                    <div><span class="eyebrow">LIVE PREVIEW</span><h3>提示词预览</h3></div>
+                    <button class="mini-button" id="copyPromptButton" type="button">复制</button>
+                  </div>
+                  <p id="compiledPrompt"></p>
+                  <footer><span>已填入示例分镜变量</span><strong id="promptLength">0 字</strong></footer>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-panel="qa">
+              <div class="qa-layout">
+                <article class="editor-card">
+                  <header><span class="eyebrow">QUALITY ASSURANCE</span><h3>生成结果检查清单</h3><p>打包后，AI 会在每次生成结束时逐项检查。</p></header>
+                  <div class="editor-fields"><label><span>QA 项目</span><textarea class="qa-editor" data-key="qaChecklist"></textarea></label></div>
+                </article>
+                <article class="qa-score-card">
+                  <span class="eyebrow">CURRENT SCORE</span>
+                  <div class="score-ring"><strong>7/7</strong><span>检查项</span></div>
+                  <h3>角色规则覆盖完整</h3>
+                  <p>三视图、配色、比例、动作、背景和禁用项均已纳入检查。</p>
+                  <button class="button yellow" id="validateAgainButton" type="button">立即校验</button>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-panel="listing">
+              <div class="listing-layout">
+                <article class="editor-card">
+                  <header><span class="eyebrow">DIRECTORY COPY</span><h3>Skill 列表文案</h3><p>用于安装页面或团队技能目录展示。</p></header>
+                  <div class="editor-fields">
+                    <label><span>标题</span><input data-key="listTitle" /></label>
+                    <label><span>一句话介绍</span><input data-key="listSubtitle" /></label>
+                    <label><span>功能亮点</span><textarea rows="8" data-key="listPoints"></textarea></label>
+                  </div>
+                </article>
+                <article class="directory-preview">
+                  <div class="directory-cover"><img class="js-ip-image" alt="" /></div>
+                  <div class="directory-copy">
+                    <span class="soft-chip">ILLUSTRATION</span>
+                    <h3 data-display="listTitle"></h3>
+                    <p data-display="listSubtitle"></p>
+                    <ul id="listPointsPreview"></ul>
+                    <button class="button dark" id="packageAgainButton" type="button">获取 Skill</button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><b></b></div>
+    </main>
+    <script src="./asset.js"></script>
+    <script src="./vendor/jszip.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
